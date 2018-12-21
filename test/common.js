@@ -8,25 +8,25 @@ $(document).ready( () => {
 
     $('input, select').removeClass('invalid success');
 
-    let allFileds = $('input, select');
+    let allfields = $('input, select');
 
-    let emptyFileds = '';
+    let emptyfields = '';
 
-    let completedFileds = '';
+    let completedfields = '';
 
-    for (let i = 0; i < allFileds.length; i++) {
+    for (let i = 0; i < allfields.length; i++) {
 
-      let fieldVal = $(allFileds[i]).val();
-      let fieldName = $(allFileds[i]).attr('name')
+      let fieldVal = $(allfields[i]).val();
+      let fieldName = $(allfields[i]).attr('name')
 
       if (fieldVal.length > 0) {
-        completedFileds += `${fieldName} `;
-        $(allFileds[i]).addClass('success')
+        completedfields += `${fieldName} `;
+        $(allfields[i]).addClass('success')
       }
 
       else {
-        emptyFileds += `${fieldName} `;
-        $(allFileds[i]).addClass('invalid')
+        emptyfields += `${fieldName} `;
+        $(allfields[i]).addClass('invalid')
       }
 
     }
@@ -34,11 +34,11 @@ $(document).ready( () => {
     $('button').before(`
       <div class="filed-wrap result-save">
         <label>Empty fields:</label>
-        <p>${emptyFileds}</p>
+        <p>${emptyfields}</p>
       </div>
       <div class="filed-wrap result-save">
-        <label>completed fileds:</label>
-        <p>${completedFileds}</p>
+        <label>completed fields:</label>
+        <p>${completedfields}</p>
       </div>
     `)
 
