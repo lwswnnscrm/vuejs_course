@@ -39,13 +39,24 @@ export default {
         name: '',
         phone: '',
         color: ''
-      }
+      },
+      editMod: false
     }
   },
 
   methods: {
     openModal() {
       // метод открытия модалки vue-bootstrap
+      this.$refs.modalAddContacts.show();
+    },
+
+    openEditModal(data) {
+      const arr = [];
+      this.contact.name = data.name;
+      this.contact.phone = data.phone;
+      this.contact.color = data.color;
+      this.contact.id = data.id;
+      this.editMod = true;
       this.$refs.modalAddContacts.show();
     },
 
@@ -66,21 +77,26 @@ export default {
     },
 
     addContacts() {
-      //метод который вызываеться при submit form,
-      //this.$emit - передает события в родительский компонент
-      //в данном случае мы передаем событие add-contact в месте с которым
-      //отправляем объект this.contact который хранит информацию о нашем контакте
+      if (!this.editMod) {
+        //метод который вызываеться при submit form,
+        //this.$emit - передает события в родительский компонент
+        //в данном случае мы передаем событие add-contact в месте с которым
+        //отправляем объект this.contact который хранит информацию о нашем контакте
 
 
-      //тут мы присваем в id нашего компонента unix time
-      //подробней про unix time - https://ru.wikipedia.org/wiki/Unix-%D0%B2%D1%80%D0%B5%D0%BC%D1%8F
-      this.contact.id = new Date().getTime();
+        //тут мы присваем в id нашего компонента unix time
+        //подробней про unix time - https://ru.wikipedia.org/wiki/Unix-%D0%B2%D1%80%D0%B5%D0%BC%D1%8F
+        this.contact.id = new Date().getTime();
 
-      this.$emit('add-contact', this.contact);
+        this.$emit('add-contact', this.contact);
 
-      //после того как отправили событие с контактом в родитель
-      //вызываем метод который закроет наше модальное окно
-      this.closeModal();
+        //после того как отправили событие с контактом в родитель
+        //вызываем метод который закроет наше модальное окно
+        this.closeModal();
+      } else {
+        this.$emit('edit-contact', this.contact);
+        this.closeModal();
+      }
     }
   }
 

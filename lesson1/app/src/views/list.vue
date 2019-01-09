@@ -11,7 +11,7 @@
       </div>
       <div class="app__item--wrap">
         <!-- принимаем события удаления контакта и вызываем метод удаления контакта  -->
-        <list-item v-for='contact in filteredContacts' :key='contact.id' @delete-contact='deleteContact' :contact='contact'>
+        <list-item v-for='contact in filteredContacts' v-if :key='contact.id' :ref='"item-" + contact.id' @delete-contact='deleteContact' @edit-contact='editContact' :contact='contact'>
         </list-item>
       </div>
     </div>
@@ -27,7 +27,7 @@
       которое мы передаем с помощью $emit тут оно отловиться и вызовиться метод в родителе
       addContact в котором мы уже и добавим новый контакт
     -->
-    <modal-add ref='modalAdd' @add-contact='addContact'>
+    <modal-add ref='modalAdd' @edit-contact='contactEdit' @add-contact='addContact'>
     </modal-add>
   </div>
 </template>
@@ -39,6 +39,7 @@ import listItem from './items.vue';
 //импортируем компонент с модалкой
 import modalAdd from './modal-add.vue';
 
+
 export default {
 
   data() {
@@ -46,20 +47,7 @@ export default {
       name: '',
       phone: '',
       searchQ: '',
-      contactsList : [
-        {
-          id: 0,
-          name: 'Vasya',
-          phone: '0991759141',
-          color: '#FD6F63'
-        },
-        {
-          id: 1,
-          name: 'Petya',
-          phone: '0751419673',
-          color: '#83FFD8'
-        }
-      ]
+      contactsList: []
     }
   },
 
@@ -67,6 +55,12 @@ export default {
   components: {
     listItem,
     modalAdd
+  },
+
+  watch: {
+    contactsList: function(oldValue, newValue) {
+      localStorage.setItem('contactList', JSON.stringify(this.contactsList))
+    },
   },
 
   computed: {
@@ -81,12 +75,23 @@ export default {
   },
 
   methods: {
-
     openModal() {
       // this.$refs.modalAdd обращение к компоненту модального окна по его индификатору modalAdd
       // this.$refs - вернет все ref которые используються в компоненте
       // this.$refs.modalAdd.openModal() - обращение к метуду внутри модального окна openModal()
-      this.$refs.modalAdd.openModal()
+      this.$refs.modalAdd.openModal();
+    },
+
+    editContact(contact) {
+      this.$refs.modalAdd.openEditModal(contact);
+    },
+
+    contactEdit(contact) {
+      for(const [index, value] of this.contactsList.entries()) {
+        if (value.id === contact.id) {
+          this.contactsList[index].name = contact.name;
+        }
+      }
     },
 
     deleteContact(contact) {
@@ -137,6 +142,11 @@ export default {
 
     }
 
+  },
+
+  created() {
+    const contactsList = JSON.parse(localStorage.getItem('contactList'));
+    this.contactsList = contactsList;
   },
 
 }

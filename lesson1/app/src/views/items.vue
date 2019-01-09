@@ -10,6 +10,7 @@
       <p>{{ phoneFormat }}</p>
     </div>
 
+    <button type="button" @click='editContact' class="edit">Edit</button>
     <button type="button" @click='deleteContact' class="delete"></button>
   </div>
 </template>
@@ -37,6 +38,9 @@ export default {
       //При нажатии на удалить мы передаем события удаления в компонент родителя
       //Куда передаем id элемента который нужно удалить
       this.$emit('delete-contact', this.contact)
+    },
+    editContact() {
+      this.$emit('edit-contact', this.contact)
     }
   }
 
