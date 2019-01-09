@@ -39,8 +39,7 @@ export default {
         name: '',
         phone: '',
         color: ''
-      },
-      editMod: false
+      }
     }
   },
 
@@ -51,12 +50,10 @@ export default {
     },
 
     openEditModal(data) {
-      const arr = [];
       this.contact.name = data.name;
       this.contact.phone = data.phone;
       this.contact.color = data.color;
       this.contact.id = data.id;
-      this.editMod = true;
       this.$refs.modalAddContacts.show();
     },
 
@@ -77,7 +74,7 @@ export default {
     },
 
     addContacts() {
-      if (!this.editMod) {
+      if (this.contact.id === 0) {
         //метод который вызываеться при submit form,
         //this.$emit - передает события в родительский компонент
         //в данном случае мы передаем событие add-contact в месте с которым

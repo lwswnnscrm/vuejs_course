@@ -11,7 +11,7 @@
       </div>
       <div class="app__item--wrap">
         <!-- принимаем события удаления контакта и вызываем метод удаления контакта  -->
-        <list-item v-for='contact in filteredContacts' v-if :key='contact.id' :ref='"item-" + contact.id' @delete-contact='deleteContact' @edit-contact='editContact' :contact='contact'>
+        <list-item v-for='contact in filteredContacts' :key='contact.id' :ref='"item-" + contact.id' @delete-contact='deleteContact' @edit-contact='editContact' :contact='contact'>
         </list-item>
       </div>
     </div>
@@ -58,7 +58,7 @@ export default {
   },
 
   watch: {
-    contactsList: function(oldValue, newValue) {
+    contactsList: function() {
       localStorage.setItem('contactList', JSON.stringify(this.contactsList))
     },
   },
@@ -90,6 +90,8 @@ export default {
       for(const [index, value] of this.contactsList.entries()) {
         if (value.id === contact.id) {
           this.contactsList[index].name = contact.name;
+          this.contactsList[index].color = contact.color;
+          this.contactsList[index].phone = contact.phone;
         }
       }
     },
