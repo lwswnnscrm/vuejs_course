@@ -148,7 +148,9 @@ export default {
 
   created() {
     const contactsList = JSON.parse(localStorage.getItem('contactList'));
-    this.contactsList = contactsList;
+    if (contactsList) {
+      this.contactsList = contactsList;
+    }
   },
 
 }
