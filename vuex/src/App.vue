@@ -4,6 +4,9 @@
     <button @click='setCount(1)' type="button" name="button">1</button>
     <button @click='setCount(2)' type="button" name="button">2</button>
     <button @click='setCount(3)' type="button" name="button">3</button>
+
+    <hello-world>
+    </hello-world>
   </div>
 </template>
 
@@ -14,20 +17,29 @@ import { mapState } from 'vuex';
 
 export default {
   name: 'app',
+
   components: {
     HelloWorld,
   },
+
   computed: mapState({
     count: state => {
-      return state.count;
+      return state.count.count;
     }
   }),
 
   methods: {
     setCount: function(count) {
-      this.$store.dispatch('setCount', count)
+
+      const obj = {
+        count: count,
+        type: 'SET_COUNT_PLUS'
+      }
+
+      this.$store.dispatch('setCount', obj)
     }
   }
+
 };
 </script>
 

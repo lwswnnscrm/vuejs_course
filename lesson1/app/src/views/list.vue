@@ -63,11 +63,13 @@ export default {
 
   watch: {
     contactsList: function() {
-      localStorage.setItem('contactList', JSON.stringify(this.contactsList))
+      // localStorage.setItem('contactList', JSON.stringify(this.contactsList));
+      this.changeContactListVuex();
     },
   },
 
   computed: {
+
     filteredContacts() {
       const contactsList = this.contactsList;
       const searchQ = this.searchQ.toLowerCase();
@@ -83,7 +85,6 @@ export default {
       return filtredContact;
     }
   },
-
   methods: {
     openModal() {
       // this.$refs.modalAdd обращение к компоненту модального окна по его индификатору modalAdd
@@ -92,67 +93,71 @@ export default {
       this.$refs.modalAdd.openModal();
     },
 
-    editStar(contact) {
-      if (this.topContacts.length > 2) {
-        return false;
-      } else {
-        for(const [index, value] of this.contactsList.entries()) {
-          if (value.id === contact.id) {
-            this.contactsList[index].star = this.contactsList[index].star ? false : true;
-          }
-        }
-      }
-
-      console.log(this.topContacts)
+    changeContactListVuex() {
+      this.$store.dispatch('setItems', this.contactsList);
     },
 
-    editContact(contact) {
-      this.$refs.modalAdd.openEditModal(contact);
-    },
+    // editStar(contact) {
+    //   if (this.topContacts.length > 2) {
+    //     return false;
+    //   } else {
+    //     for(const [index, value] of this.contactsList.entries()) {
+    //       if (value.id === contact.id) {
+    //         this.contactsList[index].star = this.contactsList[index].star ? false : true;
+    //       }
+    //     }
+    //   }
+    //
+    //   console.log(this.topContacts)
+    // },
 
-    contactEdit(contact) {
-      for(const [index, value] of this.contactsList.entries()) {
-        if (value.id === contact.id) {
-          this.contactsList[index].name = contact.name;
-          this.contactsList[index].color = contact.color;
-          this.contactsList[index].phone = contact.phone;
-        }
-      }
-    },
+    // editContact(contact) {
+    //   this.$refs.modalAdd.openEditModal(contact);
+    // },
 
-    deleteContact(contact) {
-      //Метод удаления контакта в которое мы передали conact которой тут и принимаем
+    // contactEdit(contact) {
+    //   for(const [index, value] of this.contactsList.entries()) {
+    //     if (value.id === contact.id) {
+    //       this.contactsList[index].name = contact.name;
+    //       this.contactsList[index].color = contact.color;
+    //       this.contactsList[index].phone = contact.phone;
+    //     }
+    //   }
+    // },
 
-
-
-      const message = `Вы уверены что хотите удалить контакт ${contact.name}`
-
-      const options = {
-        okText: 'Удалить',
-        cancelText: 'Отменить',
-      };
-
-
-      // Запршиваем подтверждение удаления контакта у пользователя
-      //С помощью vuejs-dialog
-      this.$dialog.confirm(message, options).then(() => {
-
-        for (const [index, value] of this.contactsList.entries()) {
-          if (value.id == contact.id) {
-            this.contactsList.splice(index, 1);
-            //Выводим уведомление у удалении контакта
-            this.$notify({
-              group: 'foo',
-              title: `Контакт ${contact.name} успешно удален`
-            });
-
-            break;
-          }
-        }
-
-      })
-
-    },
+    // deleteContact(contact) {
+    //   //Метод удаления контакта в которое мы передали conact которой тут и принимаем
+    //
+    //
+    //
+    //   const message = `Вы уверены что хотите удалить контакт ${contact.name}`
+    //
+    //   const options = {
+    //     okText: 'Удалить',
+    //     cancelText: 'Отменить',
+    //   };
+    //
+    //
+    //   // Запршиваем подтверждение удаления контакта у пользователя
+    //   //С помощью vuejs-dialog
+    //   this.$dialog.confirm(message, options).then(() => {
+    //
+    //     for (const [index, value] of this.contactsList.entries()) {
+    //       if (value.id == contact.id) {
+    //         this.contactsList.splice(index, 1);
+    //         //Выводим уведомление у удалении контакта
+    //         this.$notify({
+    //           group: 'foo',
+    //           title: `Контакт ${contact.name} успешно удален`
+    //         });
+    //
+    //         break;
+    //       }
+    //     }
+    //
+    //   })
+    //
+    // },
 
     addContact(contact) {
       //метод принимает contact который мы передаем
