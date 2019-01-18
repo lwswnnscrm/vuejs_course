@@ -9,9 +9,13 @@
         -->
         <input type="text" v-model='searchQ' class="app__top--search" placeholder="Поиск по контактам">
       </div>
+      <div v-for='contact in filteredContacts'>
+        <list-item v-if='contact.star' :key='contact.id' :ref='"item-" + contact.id' @delete-contact='deleteContact' @edit-star-val='editStar' @edit-contact='editContact' :contact='contact'>
+        </list-item>
+      </div>
       <div class="app__item--wrap">
         <!-- принимаем события удаления контакта и вызываем метод удаления контакта  -->
-        <list-item v-for='contact in filteredContacts' :key='contact.id' :ref='"item-" + contact.id' @delete-contact='deleteContact' @edit-contact='editContact' :contact='contact'>
+        <list-item v-for='contact in filteredContacts' :key='contact.id' :ref='"item-" + contact.id' @delete-contact='deleteContact' @edit-star-val='editStar' @edit-contact='editContact' :contact='contact'>
         </list-item>
       </div>
     </div>
@@ -27,7 +31,7 @@
       которое мы передаем с помощью $emit тут оно отловиться и вызовиться метод в родителе
       addContact в котором мы уже и добавим новый контакт
     -->
-    <modal-add ref='modalAdd' @edit-contact='contactEdit' @add-contact='addContact'>
+    <modal-add ref='modalAdd' :topcontactcount='topContacts.length' @edit-contact='contactEdit' @add-contact='addContact'>
     </modal-add>
   </div>
 </template>
@@ -71,6 +75,12 @@ export default {
         return el.name.toLowerCase().indexOf(searchQ) !== -1;
       })
       return filteredContacts;
+    },
+
+    topContacts() {
+      const allContacts = this.contactsList;
+      const filtredContact = allContacts.filter(el => el.star);
+      return filtredContact;
     }
   },
 
@@ -80,6 +90,20 @@ export default {
       // this.$refs - вернет все ref которые используються в компоненте
       // this.$refs.modalAdd.openModal() - обращение к метуду внутри модального окна openModal()
       this.$refs.modalAdd.openModal();
+    },
+
+    editStar(contact) {
+      if (this.topContacts.length > 2) {
+        return false;
+      } else {
+        for(const [index, value] of this.contactsList.entries()) {
+          if (value.id === contact.id) {
+            this.contactsList[index].star = this.contactsList[index].star ? false : true;
+          }
+        }
+      }
+
+      console.log(this.topContacts)
     },
 
     editContact(contact) {
@@ -153,6 +177,10 @@ export default {
     }
   },
 
+  mounted() {
+    this.openModal();
+  }
+
 }
 </script>
 
@@ -212,6 +240,10 @@ export default {
       cursor: pointer;
       box-shadow: $box-shadow;
     }
+  }
+
+  .name-phone {
+    display: none !important;
   }
 
 </style>

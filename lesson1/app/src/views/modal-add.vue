@@ -19,6 +19,7 @@
     <form @submit.prevent="addContacts" id='form-add'>
       <input type="text" v-model='contact.name' required placeholder="Имя">
       <input type="text" v-model='contact.phone' required placeholder="Телефон">
+      <input type="checkbox" :disabled='topcontactcount > 2' v-model='contact.star'>
       <div class="color-pick">
         <input type="color" v-model='contact.color'>
         <span>
@@ -32,13 +33,16 @@
 <script>
 export default {
 
+  props: ['topcontactcount'],
+
   data() {
     return {
       contact: {
         id: 0,
         name: '',
         phone: '',
-        color: ''
+        color: '',
+        star: false
       }
     }
   },
@@ -53,6 +57,7 @@ export default {
       this.contact.name = data.name;
       this.contact.phone = data.phone;
       this.contact.color = data.color;
+      this.contact.star = data.star;
       this.contact.id = data.id;
       this.$refs.modalAddContacts.show();
     },
@@ -69,7 +74,8 @@ export default {
         id: 0,
         name: '',
         phone: '',
-        color: ''
+        color: '',
+        star: false
       }
     },
 

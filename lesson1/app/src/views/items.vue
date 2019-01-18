@@ -10,6 +10,7 @@
       <p>{{ phoneFormat }}</p>
     </div>
 
+    <button type="button" @click='editStartVal' class="star"></button>
     <button type="button" @click='editContact' class="edit"></button>
     <button type="button" @click='deleteContact' class="delete"></button>
   </div>
@@ -41,13 +42,17 @@ export default {
     },
     editContact() {
       this.$emit('edit-contact', this.contact)
+    },
+
+    editStartVal() {
+      this.$emit('edit-star-val', this.contact)
     }
   }
 
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
   // сново импорт переменных в компонент
   @import '@/style/_vars.scss';
