@@ -1,18 +1,33 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    {{ count }}
+    <button @click='setCount(1)' type="button" name="button">1</button>
+    <button @click='setCount(2)' type="button" name="button">2</button>
+    <button @click='setCount(3)' type="button" name="button">3</button>
   </div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue';
 
+import { mapState } from 'vuex';
+
 export default {
   name: 'app',
   components: {
     HelloWorld,
   },
+  computed: mapState({
+    count: state => {
+      return state.count;
+    }
+  }),
+
+  methods: {
+    setCount: function(count) {
+      this.$store.dispatch('setCount', count)
+    }
+  }
 };
 </script>
 
