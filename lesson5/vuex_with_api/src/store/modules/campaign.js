@@ -1,13 +1,18 @@
 import axios from 'axios';
+import urls from '@/data/urls';
 
 const state = {
   campaign: null,
-  loadingCampaign: true
-}
+  loadingCampaign: true,
+};
 
 const getters = {
-
-}
+  getImage: (state) => (tag) => {
+    const images = state.campaign.relationships.media.data;
+    const result = images.filter(el => el.tag === tag);
+    return result;
+  }
+};
 
 const mutations = {
   SET_DATA(state, value) {
@@ -15,23 +20,24 @@ const mutations = {
   },
   SET_LOADING(state, value) {
     state.loadingCampaign = value;
-  }
-}
+  },
+};
 
 const actions = {
-  getCampaign({ commit }) {
+  getCampaign({ commit }, { idCampaign, getParams = '' }) {
+    console.log(idCampaign, getParams)
     commit('SET_LOADING', true);
-    axios.get('https://api.charidy.com/api/v1/campaign/mhmc?locate_by_shortlink=1&extend[]=donation_level&extend[]=share&extend[]=languages&extend[]=media&extend[]=organization&extend[]=metas&extend[]=largest_donation&extend[]=campaign_stats&extend[]=matchers&extend[]=donation_stream')
+    axios.get(urls.hostApi + urls.getCampaign.replace(':id', idCampaign) + getParams)
       .then(response => {
         commit('SET_DATA', response.data.data);
         commit('SET_LOADING', false);
       })
   }
-}
+};
 
 export default  {
   state,
   getters,
   mutations,
-  actions
-}
+  actions,
+};

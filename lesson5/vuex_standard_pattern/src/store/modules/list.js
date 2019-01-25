@@ -1,3 +1,5 @@
+import store from '../store';
+
 const getters = {
   itemsCount: state => state.items.length,
 
@@ -19,7 +21,7 @@ const mutations = {
   },
   SET_ITEM(state, value) {
     state.items = value;
-  },
+  }
 };
 
 const actions = {
@@ -44,7 +46,7 @@ const actions = {
 };
 
 const state = {
-  items: [
+  list: [
     {
       id: 1,
       name: 'Denis',

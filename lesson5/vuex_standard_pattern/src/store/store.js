@@ -8,5 +8,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   modules: {
     items,
+    item,
+    list
   },
 });
