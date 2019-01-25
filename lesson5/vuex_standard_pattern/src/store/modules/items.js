@@ -8,7 +8,7 @@ const getters = {
 };
 
 const mutations = {
-  SET_ITEM(state, value) {
+  APPEND_ITEM(state, {value, type}) {
     state.items.push(value);
   },
   DELETE_ITEM(state, index) {
@@ -17,11 +17,14 @@ const mutations = {
   REPLACE_ITEM(state, { value, index }) {
     state.items.splice(index, 1, value);
   },
+  SET_ITEM(state, value) {
+    state.items = value;
+  }
 };
 
 const actions = {
-  setItem({ commit }, value) {
-    commit('SET_ITEM', value);
+  appendItem({ commit }, value) {
+    commit('APPEND_ITEM', value);
   },
 
   deleteItem({ state, commit }, value) {

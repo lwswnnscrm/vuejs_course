@@ -1,18 +1,28 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app" v-if='!loading'>
+    <h4>
+      {{ title }}
+    </h4>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
+import { mapState } from 'vuex';
 
 export default {
   name: 'app',
-  components: {
-    HelloWorld,
-  },
+
+  computed: mapState({
+    loading: state => state.campaign.loadingCampaign,
+    title: state => {
+      console.log(state.campaign.campaign.attribute);
+      return state.campaign.campaign.attribute.title;
+    },
+  }),
+
+  created() {
+    this.$store.dispatch('getCampaign');
+  }
 };
 </script>
 

@@ -72,6 +72,12 @@ export default {
     },
   },
 
+  watch: {
+    items: function() {
+      localStorage.setItem('items', JSON.stringify(this.items))
+    }
+  },
+
   methods: {
     ...mapMutations({
 
@@ -110,6 +116,13 @@ export default {
       this.selectedId = id;
     },
   },
+
+  created: function() {
+    const data = JSON.parse(localStorage.getItem('items'));
+    if (data) {
+      
+    }
+  }
 };
 </script>
 
