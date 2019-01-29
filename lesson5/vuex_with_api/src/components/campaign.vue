@@ -1,7 +1,7 @@
 <template lang="html">
   <div>
     {{ title }}
-    {{ status }}
+    {{ calcDate }}
     <slick ref="slick" :options="slickOptions">
       <div class="slick-el-div" v-for='image in images' :key='image.id'>
         <img :src="image.src" alt="#">
@@ -16,6 +16,8 @@ import Slick from 'vue-slick';
 
 import { mapState, mapGetters } from 'vuex';
 
+import moment from 'moment';
+
 export default {
 
   data() {
@@ -28,6 +30,7 @@ export default {
         arrows: false,
         accessibility: false,
       },
+      calcDate: null,
     };
   },
 
@@ -43,15 +46,11 @@ export default {
     ...mapGetters({
       imagesGet: 'getImage',
       getStatus: 'getCampaignStatus',
-      getCalcDate: ''
+      getCalcDate: 'getCalcDate'
     }),
 
     status() {
       return this.getStatus(new Date());
-    },
-
-    calcDate() {
-
     },
 
     images() {
@@ -59,8 +58,17 @@ export default {
     }
   },
 
-  created() {
+  methods: {
+    calcDateMethods() {
+       const { time, status } = this.getCalcDate(this.status);
+       this.calcDate = time;
+    }
+  },
 
+  created() {
+    setInterval( () => {
+      this.calcDateMethods();
+    }, 1000 )
   }
 
 }

@@ -18,6 +18,35 @@ const getters = {
     const calcDate = new Date(startData) - thisDate;
     return calcDate > 0 ? 0 : 1;
   },
+
+  getCalcDate: (state) => (mode = 0) => {
+    const startData = state.campaign.attributes.start_date;
+    const endData = state.campaign.attributes.end_date;
+    let result = null;
+    if (mode === 0) {
+      const obj = {
+        time: new Date(startData) - new Date(),
+        status: 'countdown'
+      };
+      result = obj
+    } else {
+      const endDateCalc = new Date(endData) - new Date();
+      if (endDateCalc > 0) {
+        const obj = {
+          time: new Date(endData) - new Date(),
+          status: 'live'
+        };
+        result = obj;
+      } else {
+        const obj = {
+          time: new Date() - new Date(endData),
+          status: 'end_campaign'
+        };
+        result = obj;
+      }
+    }
+    return result;
+  }
 };
 
 const mutations = {
