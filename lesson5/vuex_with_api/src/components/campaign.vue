@@ -1,6 +1,7 @@
 <template lang="html">
   <div>
     {{ title }}
+    {{ status }}
     <slick ref="slick" :options="slickOptions">
       <div class="slick-el-div" v-for='image in images' :key='image.id'>
         <img :src="image.src" alt="#">
@@ -40,12 +41,26 @@ export default {
     }),
 
     ...mapGetters({
-      imagesGet: 'getImage'
+      imagesGet: 'getImage',
+      getStatus: 'getCampaignStatus',
+      getCalcDate: ''
     }),
+
+    status() {
+      return this.getStatus(new Date());
+    },
+
+    calcDate() {
+
+    },
 
     images() {
       return this.imagesGet('campaign_hero');
     }
+  },
+
+  created() {
+
   }
 
 }
@@ -54,7 +69,7 @@ export default {
 <style lang="scss">
   @import '~slick-carousel/slick/slick.css';
   @import '~slick-carousel/slick/slick-theme.css';
-  
+
   .slick-el-div {
     width: 1170px;
     height: 400px;

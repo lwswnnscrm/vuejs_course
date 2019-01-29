@@ -27,7 +27,7 @@ export default {
 
     callActionsGetCampaign() {
       const idCampaign = location.pathname.replace('/', '');
-      const getParams = '?locate_by_shortlink=1&extend[]=donation_level&extend[]=share&extend[]=languages&extend[]=media&extend[]=organization&extend[]=metas&extend[]=largest_donation&extend[]=campaign_stats&extend[]=matchers&extend[]=donation_stream';
+      const getParams = '?locate_by_shortlink=1&extend[]=share&extend[]=languages&extend[]=media&extend[]=organization&extend[]=metas&extend[]=largest_donation&extend[]=campaign_stats&extend[]=matchers&extend[]=donation_stream';
       const obj = {
         idCampaign,
         getParams,
