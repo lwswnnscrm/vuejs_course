@@ -7,6 +7,10 @@
         <img :src="image.src" alt="#">
       </div>
     </slick>
+    <p>{{ goal }}</p>
+    <p>{{ total }}</p>
+    <b-progress :value="progress" :max="100" class="mb-3"></b-progress>
+    {{ progress }}
   </div>
 </template>
 
@@ -14,7 +18,7 @@
 
 import Slick from 'vue-slick';
 
-import { mapState, mapGetters } from 'vuex';
+import { mapState, mapActions, mapGetters, mapMutations } from 'vuex';
 
 import moment from 'moment';
 
@@ -41,6 +45,8 @@ export default {
   computed: {
     ...mapState({
       title: state => state.campaign.campaign.attributes.title,
+      goal: state => state.campaign.campaign.attributes.rounds[0].goal,
+      total: state => state.campaign.campaign.relationships.campaign_stats.data.total,
     }),
 
     ...mapGetters({
@@ -48,6 +54,10 @@ export default {
       getStatus: 'getCampaignStatus',
       getCalcDate: 'getCalcDate'
     }),
+
+    progress() {
+      return this.total / this.goal * 100;
+    },
 
     status() {
       return this.getStatus(new Date());

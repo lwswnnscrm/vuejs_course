@@ -1,6 +1,5 @@
 import axios from 'axios';
 import urls from '@/data/urls';
-
 const state = {
   donors: null,
   loadingDonors: true,
@@ -11,19 +10,28 @@ const getters = {
 };
 
 const mutations = {
-
+  SET_DONORS(state, value) {
+    state.donors = value;
+  },
+  SET_LOADING_DONORS(state, value) {
+    state.loadingDonors = value;
+  },
 };
 
 const actions = {
-  getDonors({ commit }, { idCampaign }) {
-    axios.get(urls.hostApi + urls.getDonationList.replace(':id', idCampaign) + getParams)
+  getDonors({ commit }, { campaignId, getParams = '' }) {
+    axios.get(
+      urls.hostApi +
+      urls.getDonationList.replace(':id', campaignId) +
+      getParams
+    )
       .then(response => {
-        commit('SET_DATA', response.data.data);
-      })
-  }
+        commit('SET_DONORS', response.data.data);
+      });
+  },
 };
 
-export default  {
+export default {
   state,
   getters,
   mutations,

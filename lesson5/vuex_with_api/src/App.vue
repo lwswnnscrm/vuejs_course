@@ -2,18 +2,22 @@
   <div id="app" v-if='!loading'>
     <campaign>
     </campaign>
+    <donors>
+    </donors>
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
 import campaign from './components/campaign.vue';
+import donors from './components/donors.vue';
 
 export default {
   name: 'app',
 
   components: {
-    campaign
+    campaign,
+    donors
   },
 
   computed: mapState({
@@ -43,6 +47,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~bootstrap/dist/css/bootstrap.css';
+@import '~bootstrap-vue/dist/bootstrap-vue.css';
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
