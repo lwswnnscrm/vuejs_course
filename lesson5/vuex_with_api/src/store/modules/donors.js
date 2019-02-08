@@ -1,20 +1,13 @@
 import axios from 'axios';
 import urls from '@/data/urls';
+
 const state = {
-  donors: null,
-  loadingDonors: true,
-};
-
-const getters = {
-
+  donors: [],
 };
 
 const mutations = {
   SET_DONORS(state, value) {
     state.donors = value;
-  },
-  SET_LOADING_DONORS(state, value) {
-    state.loadingDonors = value;
   },
 };
 
@@ -33,7 +26,6 @@ const actions = {
 
 export default {
   state,
-  getters,
   mutations,
   actions,
 };

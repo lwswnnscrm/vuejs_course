@@ -42,8 +42,9 @@ export default {
   },
 
   methods: {
+
     ...mapActions({
-      getDonorsList: 'getDonors',
+      getDonors: 'getDonors',
     }),
 
     callToApiGetDonors() {
@@ -51,7 +52,8 @@ export default {
         campaignId: this.campaignId,
         getParams: '?extend=organization&extend=level&extend=team?extend=organization&extend=level&extend=team&sortBy=-time&limit=10',
       };
-      this.getDonorsList(obj)
+      //this.getDonors(obj);
+      this.$store.dispatch('getDonors', obj);
     },
   },
 

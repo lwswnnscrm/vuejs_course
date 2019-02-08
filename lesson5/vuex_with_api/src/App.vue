@@ -25,24 +25,22 @@ export default {
   }),
 
   methods: {
-    ...mapActions({
-      getCampaign: 'getCampaign',
-    }),
 
     callActionsGetCampaign() {
       const idCampaign = location.pathname.replace('/', '');
       const getParams = '?locate_by_shortlink=1&extend[]=share&extend[]=languages&extend[]=media&extend[]=organization&extend[]=metas&extend[]=largest_donation&extend[]=campaign_stats&extend[]=matchers&extend[]=donation_stream';
       const obj = {
-        idCampaign,
-        getParams,
+        idCampaign: idCampaign,
+        getParams: getParams,
       };
-      this.getCampaign(obj);
+      // this.getCampaign(obj);
+      this.$store.dispatch('getCampaign', obj)
     },
   },
 
   created() {
     this.callActionsGetCampaign();
-  }
+  },
 };
 </script>
 

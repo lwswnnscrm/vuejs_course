@@ -1,5 +1,6 @@
 import axios from 'axios';
 import urls from '@/data/urls';
+import store from '@/store/store.js';
 
 const state = {
   campaign: null,
@@ -59,14 +60,18 @@ const mutations = {
 };
 
 const actions = {
-  getCampaign({ commit }, { idCampaign, getParams = '' }) {
-    commit('SET_LOADING', true);
-    axios.get(urls.hostApi + urls.getCampaign.replace(':id', idCampaign) + getParams)
+  getCampaign(context, obj) {
+    console.log(context);
+    axios.get(urls.hostApi + urls.getCampaign.replace(':id', obj.idCampaign) + obj.getParams)
       .then(response => {
-        commit('SET_DATA', response.data.data);
-        commit('SET_LOADING', false);
-      })
-  }
+        const reponse = response.data.data;
+        console.log(reponse)
+        // context.commit('SET_DATA', reponse);
+        store.commit('SET_DATA', reponse);
+        store.commit('SET_LOADING', false)
+
+      });
+  },
 };
 
 export default  {

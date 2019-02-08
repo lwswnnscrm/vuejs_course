@@ -44,16 +44,26 @@ export default {
 
   computed: {
     ...mapState({
-      title: state => state.campaign.campaign.attributes.title,
+      // title: state => state.campaign.campaign.attributes.title,
+      title: function() {
+        return this.$store.state.campaign.campaign.attributes.title;
+      },
       goal: state => state.campaign.campaign.attributes.rounds[0].goal,
       total: state => state.campaign.campaign.relationships.campaign_stats.data.total,
     }),
 
+
+
     ...mapGetters({
-      imagesGet: 'getImage',
+      // imagesGet: 'getImage',
       getStatus: 'getCampaignStatus',
       getCalcDate: 'getCalcDate'
     }),
+
+    images() {
+      return this.$store.getters.getImage('campaign_hero');
+      // return this.imageGet('campaign_hero');
+    },
 
     progress() {
       return this.total / this.goal * 100;
@@ -62,10 +72,6 @@ export default {
     status() {
       return this.getStatus(new Date());
     },
-
-    images() {
-      return this.imagesGet('campaign_hero');
-    }
   },
 
   methods: {
