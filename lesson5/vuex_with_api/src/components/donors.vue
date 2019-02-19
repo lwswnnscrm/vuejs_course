@@ -21,7 +21,7 @@ export default {
   },
 
   watch: {
-    searchQ: function() {
+    searchQ: function(newVal, oldVal) {
       let obj = {
         campaignId: this.campaignId,
         getParams: `?extend=organization&extend=level&extend=team?extend=organization&extend=level&extend=team&sortBy=-time&limit=10&searchQ=${this.searchQ}`,

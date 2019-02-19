@@ -12,14 +12,15 @@ const mutations = {
 };
 
 const actions = {
-  getDonors({ commit }, { campaignId, getParams = '' }) {
+  getDonors(context, { campaignId, getParams = '' }) {
+    console.log(context);
     axios.get(
       urls.hostApi +
       urls.getDonationList.replace(':id', campaignId) +
       getParams
     )
       .then(response => {
-        commit('SET_DONORS', response.data.data);
+        context.commit('SET_DONORS', response.data.data);
       });
   },
 };
