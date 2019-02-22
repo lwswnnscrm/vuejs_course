@@ -46,16 +46,58 @@ const router = new Router({
         }
       ]
     },
+    // {
+    //   path: '/news/:id',
+    //   name: 'contacts',
+    //   component: Contacts,
+    // }
+  ],
+});
+
+const router = new Router({
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes: [
     {
-      path: '/news/:id',
-      name: 'contacts',
-      component: Contacts,
+      path: '/',
+      name: 'home',
+      component: 'index.vue',
+    },
+    {
+      path: '/about',
+      component: 'about.vue',
+    },
+    {
+      path: '/news',
+      children: [
+        {
+          path: '',
+          camponent: './news/index.vue'
+        },
+        {
+          path: '/:id',
+          camponent: './news/_id.vue'
+        }
+      ]
+    },
+    {
+      path: ':user',
+      children: [
+        {
+          path: '',
+          component: './_user/index.vue'
+        },
+        {
+          path: 'setting',
+          component: './_user/setting.vue'
+        }
+      ]
     }
   ],
 });
 
-router.beforeEach((to, from, next) => {
-  console.log(to, from, next);
-})
+// router.beforeEach((to, from, next) => {
+//   console.log(to, from, next);
+// })
 
 export default router;

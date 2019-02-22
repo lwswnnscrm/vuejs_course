@@ -10,7 +10,15 @@
 </template>
 
 <script>
+
+import router from '@/router';
+
 export default {
+
+  created() {
+    this.$router.push('/news/1')
+  }
+
 }
 </script>
 
